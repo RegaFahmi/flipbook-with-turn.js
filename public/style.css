@@ -1,0 +1,274 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins" , sans-serif;
+}
+
+h1 {
+    color: blue;
+}
+
+#canvas1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    overflow: hidden;
+    background: radial-gradient(#ffc38c, #ff9b40);
+    background-size: 100% 100%;
+}
+
+.sidebar{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 78px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
+    z-index: 99;
+    transition: all 0.5s ease;
+}
+
+.sidebar i{
+    color: #fff;
+    height: 60px;
+    min-width: 50px;
+    font-size: 28px;
+    text-align: center;
+    line-height: 60px;
+}
+  
+.sidebar .nav-list{
+    margin-top: 20px;
+    height: 100%;
+}
+
+.sidebar li{
+    position: relative;
+    margin: 8px 0;
+    list-style: none;
+}
+  
+.sidebar li .tooltip{
+    position: absolute;
+    top: -20px;
+    left: calc(100% + 15px);
+    z-index: 3;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 400;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: 0s;
+}
+
+.sidebar li:hover .tooltip{
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+    top: 50%;
+    transform: translateY(-50%);  
+}
+
+.sidebar.open li .tooltip{
+    display: none;
+}
+
+.sidebar li a{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    background: #ff9b40;
+}
+  
+.sidebar li a:hover{
+    background: #FFF; 
+}
+  
+.sidebar li a .links_name{
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+  
+.sidebar.open li a .links_name{
+    opacity: 1;
+    pointer-events: auto;
+  
+}
+
+  
+.sidebar li a:hover .links_name,  
+.sidebar li a:hover i{
+    transition: all 0.5s ease;
+    color: #11101D;
+}
+  
+.sidebar li i{
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    border-radius: 12px;
+  
+}
+
+/* admin gg */
+.sidebar li.profile{
+    position: fixed;
+    height: 60px;
+    width: 78px;
+    left: 0;
+    bottom: -8px;
+    padding: 10px 14px;
+    background: #1d1b31;
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+.sidebar.open li.profile{
+    width: 250px;
+}
+
+.sidebar li .profile-details{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.sidebar .profile #upload{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: #ff9b40;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 0px;
+    transition: all 0.5s ease;
+}
+
+.sidebar.open .profile #upload{
+    width: 50px;
+    background: none;
+}
+
+/* icon scale */
+.icon {
+    width: 50px;
+    height: 50px; 
+    vertical-align: middle; 
+}
+
+#album-container {
+    width: 1200px; 
+    height: 870px; 
+    margin: 2% auto;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+#album {    
+    max-width: 100%;
+    height: 800px; 
+    text-align: center;
+    overflow: hidden;
+}
+
+.popup {
+    background: rgba(255, 255, 255, 0.3);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.popup-content {
+    height: 550px;
+    width: 300px;
+    background: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
+input {
+    margin: 30px auto;
+    display: block;
+    width: 80%;
+    padding: 8px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.cancel {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: #fff;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    box-shadow:  6px 6px 29px -4px rgba(0,0,0,0.75);
+    cursor: pointer;
+}
+
+.cancel:hover {
+    background: #ff0000;
+}
+
+.button {
+    background: #fff;
+    padding: 10px 15px;
+    color: #34495e;
+    border-radius: 5px;
+    box-shadow:  6px 6px 29px -4px rgba(0,0,0,0.75);
+    margin-top: 25px;
+    text-decoration: none;
+    transition: 0.4s;
+}
+
+.button:hover {
+    background: #40ff80;
+    color: #fff;
+}
+
+
+#music-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: url('speaker-on.png') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+}

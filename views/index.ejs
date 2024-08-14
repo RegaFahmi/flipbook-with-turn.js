@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flibook Rega</title>
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- box icon -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <!--button sidebar angka-->
+    <div class="sidebar">
+        <ul class="nav-list">
+            <li>
+                <a href="#" class="filter-year" data-year="">
+                    <img src="/refresh.png" alt="Reload Icon" class="icon">
+                </a>
+                <span class="tooltip">ALL</span>
+            </li>
+            <li>
+                <a href="#" class="filter-year" data-year="2023">
+                    <img src="/23.png" alt="2023 Icon" class="icon">
+                </a>
+                <span class="tooltip">2023</span>
+            </li>
+            <li>
+                <a href="#" class="filter-year" data-year="2022">
+                    <img src="/22.png" alt="2022 Icon" class="icon">
+                </a>
+                <span class="tooltip">2022</span>
+            </li>
+            <li>
+                <a href="#" class="filter-year" data-year="2021">
+                    <img src="/21.png" alt="2021 Icon" class="icon">
+                </a>
+                <span class="tooltip">2021</span>
+            </li>
+            <li>
+                <a href="#" class="filter-year" data-year="2020">
+                    <img src="/20.png" alt="2020 Icon" class="icon">
+                </a>
+                <span class="tooltip">2020</span>
+            </li>
+            <li>
+                <a href="#" class="filter-year" data-year="2019">
+                    <img src="/19.png" alt="2019 Icon" class="icon">
+                </a>
+                <span class="tooltip">2019</span>
+            </li>
+            <li>
+                <a href="#" class="filter-year" data-year="2018">
+                    <img src="/18.png" alt="2018 Icon" class="icon">
+                </a>
+                <span class="tooltip">2018</span>
+            </li>
+            <li>
+                <a href="#" class="filter-year" data-year="2017">
+                    <img src="/17.png" alt="2017 Icon" class="icon">
+                </a>
+                <span class="tooltip">2017</span>
+            </li>
+            <li>
+                <a href="#" class="filter-year" data-year="2016">
+                    <img src="/16.png" alt="2016 Icon" class="icon">
+                </a>
+                <span class="tooltip">2016</span>
+            </li>
+
+            <!--button upload-->
+            <li class="profile">
+                <i class='bx bx-upload' id="upload"></i>
+            </li>
+        </ul>
+    </div>
+
+    <!--tampilan utama poster-->
+    <div>
+        <div id="album-container">
+            <div id="album">
+                <% for (let poster of users) { %>
+                    <div
+                        style="background-image: url('<%= poster.gambar %>'); background-size: cover; background-position: center; width: 100px; height: 100px">
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!--pop up upload-->
+    <div class="popup">
+        <div class="popup-content">
+            <img src="/upload.png" alt="admin">
+            <img src="/cancel.png" alt="Cancel" class="cancel">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="text" name="nim" placeholder="nim">
+                <input type="text" name="nama" placeholder="nama">
+                <input type="text" name="tahun" placeholder="tahun">
+                <input type="file" name="gambar">
+                <button type="submit" class="button">Upload</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- script pop up admin-->
+    <script>
+        document.getElementById("upload").addEventListener("click", function(){
+            document.querySelector(".popup").style.display = "flex";
+        });
+
+        document.querySelector(".cancel").addEventListener("click", function(){
+            document.querySelector(".popup").style.display = "none";
+        });
+    </script>
+
+    <!-- script turn js plugin majalah-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="/turn.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            const originalContent = $('#album-container').html();
+
+            $('#album').turn({ gradients: true, acceleration: true });
+
+            $('.filter-year').on('click', function(event) {
+                event.preventDefault();
+                const year = $(this).data('year');
+
+                if (year === "") {
+                    $('#album-container').html(originalContent);
+                    $('#album').turn({ gradients: true, acceleration: true });
+                } else {
+                    $.get(`/year/${year}`, function(users) {
+                        const albumContainer = $('#album-container');
+                        albumContainer.empty();
+
+                        const album = $('<div id="album"></div>');
+                        albumContainer.append(album);
+
+                        users.forEach(user => {
+                            const div = $('<div></div>').css({
+                                'background-image': `url(${user.gambar})`,
+                                'background-size': 'cover',
+                                'background-position': 'center',
+                                'width': '100px',
+                                'height': '100px'
+                            });
+                            album.append(div);
+                        });
+
+                        setTimeout(function() {
+                            console.log('Album initialized with new content');
+                            album.turn({ gradients: true, acceleration: true });
+                        }, 100);
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
